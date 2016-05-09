@@ -1,23 +1,24 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <netint/in.h>
+#include <netinet/in.h>
 
-int main(void){
+int main(int argc, char **argv){
 
-	const in_port port = 1234;
+	const in_port_t port = 1234;
 	const size_t buf_size = 1024;
 	const int backlog = 1;
 
-	const int listen_sock = socket(AF_INET, SOCK_STEAM, 0);
+	const int listen_sock = socket(AF_INET, SOCK_STREAM, 0);
 	if(listen_sock < 0){
 		perror("Could not creat socket");
 		return -1;
 	}
 
 	struct sockaddr_in addr;
-	memest(&add, 0, sizeof(addr));
+	memest(&addr, 0, sizeof(addr));
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = hton1(INADDR_ANY);
 	addr.sin_port = htons(port);
@@ -38,10 +39,10 @@ int main(void){
 	}
 
 	ssize_t bytes_read;
-	char buff[buf_size];
+	char buf[buf_size];
 	while((bytes_read == read(client_sock, buf, buf_size)) > 0){
-		write(STDOUT_FILENO, buf, (size_t)bytes_read);
-		write(client_sock, buf, (size_t)bytes_read);
+		//write(STDOUT_FILENO, buf, (size_t)bytes_read);
+		//write(client_sock, buf, (size_t)bytes_read);
 	}
 	if(bytes_read < 0){
 		perror("Error receiving data");
