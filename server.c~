@@ -7,10 +7,6 @@
 
 int main(void){
 
-
-//___atributes__((pack))
-
-
 	const in_port_t port = 1234;
 	const size_t buf_size = 1024;
 	const int backlog = 1;
