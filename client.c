@@ -15,7 +15,7 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	struct addrifo hints;
+	struct addrinfo hints;
 	memset(&hints, 0, sizeof (hints));
 	hints.ai_flags = AI_NUMERICSERV;
 	hints.ai_family = AF_INET;
@@ -25,7 +25,7 @@ int main(int argc, char **argv){
 	struct addrinfo *gai_res;
 	const int gai_status = getaddrinfo(argv[1], port, &hints, &gai_res);
 	if(gai_status != 0){
-		fprintf(stderr, "Could not resolve hostname: %s\n", gai_strerror(gai_sta));
+		fprintf(stderr, "Could not resolve hostname: %s\n", gai_strerror(gai_status));
 	}
 
 	int sock = -1;
@@ -47,10 +47,10 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	char buff[buf_size];
-	ssiz_t bytes_read_stdin, bytes_read_socket;
-	while((bytes_read_socket = read(STDIN_FILENO, buf, buf_size)) > 0){
-		if(write(sock, buf, (size_t)bytes_read_socket) != bytes_read_stdin){
+	char buf[buf_size];
+	ssize_t bytes_read_stdin, bytes_read_socket;
+	while((bytes_read_stdin = read(STDIN_FILENO, buf, buf_size)) > 0){
+		if(write(sock, buf, (size_t)bytes_read_stdin) != bytes_read_stdin){
 			perror("Error sending message");
 			return -1;
 		}
