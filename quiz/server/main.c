@@ -16,5 +16,7 @@ int main(int argc, char **argv)
 
 	infoPrint("Server Gruppe xy");
 
+	printf("test\n");
+
 	return 0;
 }
